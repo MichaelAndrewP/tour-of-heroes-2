@@ -1,6 +1,36 @@
 /* AppComponent's private CSS styles */
+.system-view {
+  text-align: center;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+.title {
+  text-align: center;
+  justify-content: center;
+}
+.app-header {
+  margin-bottom: 2rem;
+}
+.main-view {
+  display: flex;
+  flex-direction: row;
+  /*   align-items: center; */
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.audit-log-view {
+  text-align: center;
+  flex: 0 0 auto;
+  margin-right: 1rem;
+  margin-top: 2rem;
+  padding: 5rem;
+  min-height: 8rem;
+}
 h1 {
   margin-bottom: 0;
+  color: rgb(17, 102, 102);
 }
 nav a {
   padding: 1rem;
@@ -10,6 +40,12 @@ nav a {
   background-color: #e8e8e8;
   color: #3d3d3d;
   border-radius: 4px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* adjust as needed */
 }
 
 nav a:hover {

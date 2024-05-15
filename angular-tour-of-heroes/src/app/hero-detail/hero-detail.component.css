@@ -1,4 +1,9 @@
 /* HeroDetailComponent's private CSS styles */
+
+* {
+  text-align: center;
+}
+
 label {
   color: #435960;
   font-weight: bold;
@@ -7,8 +12,16 @@ input {
   font-size: 1em;
   padding: 0.5rem;
 }
+
+.detail-area {
+  border: 1px solid #435960;
+  padding-bottom: 1rem;
+  margin: 1rem 0 1rem 0;
+}
+
 button {
   margin-top: 20px;
+  margin-right: 0.5rem;
   background-color: #eee;
   padding: 1rem;
   border-radius: 4px;

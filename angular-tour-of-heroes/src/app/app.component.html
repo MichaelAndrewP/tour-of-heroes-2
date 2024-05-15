@@ -1,9 +1,19 @@
-<h1>{{ title }}</h1>
+<div class="app-header">
+  <h1 class="title">{{ title }}</h1>
+  <nav>
+    <a routerLink="/dashboard">Dashboard</a>
+    <a routerLink="/heroes">Heroes</a>
+  </nav>
+</div>
 
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/heroes">Heroes</a>
-</nav>
-
-<router-outlet></router-outlet>
-<app-messages></app-messages>
+<div class="main-view">
+  <div class="system-view">
+    <router-outlet></router-outlet>
+  </div>
+  <div
+    class="audit-log-view"
+    *ngIf="messageService.messages && messageService.messages.length > 0"
+  >
+    <app-messages></app-messages>
+  </div>
+</div>
