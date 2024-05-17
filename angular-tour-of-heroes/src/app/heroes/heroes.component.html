@@ -16,19 +16,39 @@
       </button>
     </li>
   </ul>
-  <div class="add-hero-input">
-    <label for="new-hero">Hero name: </label>
-    <input id="new-hero" #heroName />
-
-    <!-- (click) passes input value to add() and then clears the input -->
-    <button
-      type="button"
-      class="add-button"
-      (click)="add(heroName.value); heroName.value = ''"
-    >
-      Add hero
-    </button>
-  </div>
+  <form #heroForm="ngForm" (ngSubmit)="add(); heroForm.reset()">
+    <div class="add-hero-input">
+      <label for="newHero">Hero name: </label>
+      <input
+        id="newHero"
+        name="newHero"
+        [(ngModel)]="newHeroName"
+        #heroName="ngModel"
+        placeholder="Enter new hero name"
+        required
+        [ngClass]="{
+          'ng-invalid':
+            heroName.invalid && (heroName.dirty || heroName.touched),
+          'ng-valid': heroName.valid && (heroName.dirty || heroName.touched)
+        }"
+      />
+      <div
+        *ngIf="heroName.invalid && !heroName.pristine"
+        class="alert alert-danger"
+      >
+        Hero name is required.
+      </div>
+      <!-- (click) passes input value to add() and then clears the input -->
+      <button
+        type="button"
+        class="btn btn-info"
+        type="submit"
+        [disabled]="!heroForm.form.valid"
+      >
+        Add hero
+      </button>
+    </div>
+  </form>
 </div>
 <!-- <div *ngIf="selectedHero">
   <h2>{{ selectedHero.name | uppercase }} Details</h2>

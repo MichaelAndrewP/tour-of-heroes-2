@@ -11,6 +11,7 @@ import { MessageService } from '../message.service';
 })
 export class HeroesComponent implements OnInit {
   heroes: Hero[] = [];
+  newHeroName: string = '';
 
   constructor(
     private heroService: HeroService,
@@ -25,8 +26,8 @@ export class HeroesComponent implements OnInit {
     this.getHeroes();
   }
 
-  add(name: string): void {
-    name = name.trim();
+  add(): void {
+    const name = this.newHeroName.trim();
     if (!name) {
       return;
     }
