@@ -5,21 +5,48 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeroService {
+  /*   private apiUrl = 'https://gateway.marvel.com:443/v1/public/characters'; 
+  private ts = new Date().getTime().toString(); 
+  private apikey = '25bcfb91e549dc6ba6482b81df80c0c9';
+  private privateKey = '5f61ef5d7085424862460cef2305d8b71dae79fc';  */
   constructor(
     private messageService: MessageService,
     private http: HttpClient
   ) {}
 
+  generateHash(timestamp: string, privateKey: string, publicKey: string) {
+    const message = `${timestamp}${privateKey}${publicKey}`;
+    const hash = CryptoJS.MD5(message).toString(CryptoJS.enc.Hex);
+    console.log('hash:', hash);
+    return hash;
+  }
+
+  /* getCharacters(): Observable<any> {
+    const hash = this.generateHash(this.ts, this.privateKey, this.apikey);
+    const url = `${this.apiUrl}?ts=${this.ts}&apikey=${this.apikey}&hash=${hash}`;
+    console.log(
+      'get',
+      this.http
+        .get<any>(url)
+        .subscribe((response) => console.log('response', response))
+    );
+    console.log('url', url);
+    return this.http
+      .get<any>(url)
+      .pipe(tap((response) => console.log('response tap', response)));
+  } */
+
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
   }
 
-  private heroesUrl = 'api/heroes';
+  private heroesUrl = 'http://localhost:4210/api/heroes';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -60,6 +87,7 @@ export class HeroService {
     this.messageService.add(`HeroService: fetched hero id=${id}`);
     return of(hero);
   } */
+
   /** GET hero by id. Will 404 if id not found */
   getHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
@@ -71,7 +99,8 @@ export class HeroService {
 
   /** PUT: update the hero on the server */
   updateHero(hero: Hero): Observable<any> {
-    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+    const url = `${this.heroesUrl}/${hero.id}`;
+    return this.http.put(url, hero, this.httpOptions).pipe(
       tap((_) => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updateHero'))
     );
